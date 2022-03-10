@@ -1,0 +1,7 @@
+libs
+cache
+./pipeline/libs/*
+./pipeline/cache/*
+*.swp
+./backend
+.DS_Store

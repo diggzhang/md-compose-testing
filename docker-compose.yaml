@@ -1,0 +1,33 @@
+services:
+  pipeline:
+    build: pipeline
+    ports:
+      - 9011:9009
+    environment:
+      - POSTGRES_DB=example
+    volumes:
+      - ./pipeline/libs:/usr/opt/pipeline/libs
+      - ./pipeline/cache:/usr/opt/pipeline/cache
+    networks:
+      - pipeline-network
+  db:
+    image: postgres
+    restart: always
+    secrets:
+      - db-password
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - pipeline-network
+    environment:
+      - POSTGRES_DB=example
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
+    expose:
+      - 5432
+volumes:
+  db-data:
+secrets:
+  db-password:
+    file: db/password.txt
+networks:
+  pipeline-network:
