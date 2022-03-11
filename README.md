@@ -1,0 +1,1 @@
+## Compose magicbean application
