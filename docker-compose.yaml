@@ -5,9 +5,12 @@ services:
       - 9011:9009
     environment:
       - POSTGRES_DB=example
+      - SPARK_HOME=/usr/opt/pipeline/spark
     volumes:
       - ./pipeline/libs:/usr/opt/pipeline/libs
       - ./pipeline/cache:/usr/opt/pipeline/cache
+      - ./pipeline/spark-2.4.8-bin-hadoop2.7:/usr/opt/pipeline/spark
+      - /tmp/modou:/tmp/modou
     networks:
       - pipeline-network
   db:
