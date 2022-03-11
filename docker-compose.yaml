@@ -43,12 +43,14 @@ services:
     build: backend
     env_file:
       - ./backend/backend.env
+    volumes:
+      - ./backend/magicbean.lic:/root/.magicbean/magicbean.lic
     ports:
       - 11000:11000
     depends_on:
       - "db"
-      - "rabbitmq"
       - "pipeline"
+      - "rabbitmq"
     networks:
       - pipeline-network
 volumes:

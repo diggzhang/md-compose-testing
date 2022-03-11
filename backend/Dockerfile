@@ -2,7 +2,8 @@
 
 FROM domblack/oracle-jdk8
 
-RUN mkdir -p /usr/opt/backend
+RUN mkdir -p /usr/opt/backend \
+  && mkdir -p /root/.magicbean
 COPY ./stem.jar /usr/opt/backend/
 
 WORKDIR /usr/opt/backend
