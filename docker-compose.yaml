@@ -12,47 +12,47 @@ services:
       - /tmp:/tmp
     networks:
       - pipeline-network
-  db:
-    image: postgres:9.6
-    ports:
-      - 5433:5432
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=123456
-      - POSTGRES_DB=modou
-      - PGDATA=/var/lib/postgresql/data
-    volumes:
-      - ./pgdata:/var/lib/postgresql/data
-      - ./db:/db/
-    networks:
-      - pipeline-network
-  rabbitmq:
-    image: rabbitmq:3.8-management-alpine
-    environment:
-      - DEFAULT_USER=guest
-      - DEFAULT_PASS=guest
-    networks:
-      - pipeline-network
-    ports:
-      - 5673:5672
-      - 15673:15672
-    volumes:
-      - ./rabbitmq/data/:/var/lib/rabbitmq/
-      - ./rabbitmq/log/:/var/log/rabbitmq
-  backend:
-    build: backend
-    env_file:
-      - ./backend/backend.env
-    volumes:
-      - ./backend/magicbean.lic:/root/.magicbean/magicbean.lic
-    ports:
-      - 11000:11000
-    depends_on:
-      - "db"
-      - "pipeline"
-      - "rabbitmq"
-    networks:
-      - pipeline-network
+  # db:
+  #   image: postgres:9.6
+  #   ports:
+  #     - 5433:5432
+  #   environment:
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=123456
+  #     - POSTGRES_DB=modou
+  #     - PGDATA=/var/lib/postgresql/data
+  #   volumes:
+  #     - ./pgdata:/var/lib/postgresql/data
+  #     - ./db:/db/
+  #   networks:
+  #     - pipeline-network
+  # rabbitmq:
+  #   image: rabbitmq:3.8-management-alpine
+  #   environment:
+  #     - DEFAULT_USER=guest
+  #     - DEFAULT_PASS=guest
+  #   networks:
+  #     - pipeline-network
+  #   ports:
+  #     - 5673:5672
+  #     - 15673:15672
+  #   volumes:
+  #     - ./rabbitmq/data/:/var/lib/rabbitmq/
+  #     - ./rabbitmq/log/:/var/log/rabbitmq
+  # backend:
+  #   build: backend
+  #   env_file:
+  #     - ./backend/backend.env
+  #   volumes:
+  #     - ./backend/magicbean.lic:/root/.magicbean/magicbean.lic
+  #   ports:
+  #     - 11000:11000
+  #   depends_on:
+  #     - "db"
+  #     - "pipeline"
+  #     - "rabbitmq"
+  #   networks:
+  #     - pipeline-network
 volumes:
   db-data:
 networks:
