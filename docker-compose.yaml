@@ -2,57 +2,50 @@ services:
   pipeline:
     build: pipeline
     ports:
-      - 9011:9009
-    environment:
-      - SPARK_HOME=/usr/opt/pipeline/spark
-    volumes:
-      - ./pipeline/libs:/usr/opt/pipeline/libs
-      - ./pipeline/cache:/usr/opt/pipeline/cache
-      - ./pipeline/spark-2.4.8-bin-hadoop2.7:/usr/opt/pipeline/spark
-      - /tmp:/tmp
+      - 9009:9009
     networks:
       - pipeline-network
-  # db:
-  #   image: postgres:9.6
-  #   ports:
-  #     - 5433:5432
-  #   environment:
-  #     - POSTGRES_USER=postgres
-  #     - POSTGRES_PASSWORD=123456
-  #     - POSTGRES_DB=modou
-  #     - PGDATA=/var/lib/postgresql/data
-  #   volumes:
-  #     - ./pgdata:/var/lib/postgresql/data
-  #     - ./db:/db/
-  #   networks:
-  #     - pipeline-network
-  # rabbitmq:
-  #   image: rabbitmq:3.8-management-alpine
-  #   environment:
-  #     - DEFAULT_USER=guest
-  #     - DEFAULT_PASS=guest
-  #   networks:
-  #     - pipeline-network
-  #   ports:
-  #     - 5673:5672
-  #     - 15673:15672
-  #   volumes:
-  #     - ./rabbitmq/data/:/var/lib/rabbitmq/
-  #     - ./rabbitmq/log/:/var/log/rabbitmq
-  # backend:
-  #   build: backend
-  #   env_file:
-  #     - ./backend/backend.env
-  #   volumes:
-  #     - ./backend/magicbean.lic:/root/.magicbean/magicbean.lic
-  #   ports:
-  #     - 11000:11000
-  #   depends_on:
-  #     - "db"
-  #     - "pipeline"
-  #     - "rabbitmq"
-  #   networks:
-  #     - pipeline-network
+  db:
+    image: postgres:9.6
+    ports:
+      - 5433:5432
+    command: postgres -c listen_addresses='*'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=modou
+      - PGDATA=/var/lib/postgresql/data
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+      - ${PWD}/pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
+      - ./db:/db/
+    networks:
+      - pipeline-network
+  rabbitmq:
+    image: rabbitmq:3.8-management-alpine
+    environment:
+      - DEFAULT_USER=guest
+      - DEFAULT_PASS=guest
+    networks:
+      - pipeline-network
+    ports:
+      - 5673:5672
+      - 15673:15672
+    volumes:
+      - ./rabbitmq/data/:/var/lib/rabbitmq/
+      - ./rabbitmq/log/:/var/log/rabbitmq
+  backend:
+    build: backend
+    env_file:
+      - ./magicbean.env
+    ports:
+      - 11000:11000
+    depends_on:
+      - "pipeline"
+      - "db"
+      - "rabbitmq"
+    networks:
+      - pipeline-network
 volumes:
   db-data:
 networks:
