@@ -5,7 +5,13 @@ build: ## Build the container
 ## docker build --rm -t $(APP_NAME) .
 
 run: ## run container
-	docker run -d -p 22 modou
+	docker-compose up -d
+
+stop: ## stop container
+	docker-compose stop
+
+down: ## stop container
+	docker-compose down
 
 clean:
 	docker image prune

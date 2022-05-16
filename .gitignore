@@ -5,6 +5,8 @@ rabbitmq
 spark-2.4.8-bin-hadoop2.7
 ./pipeline/libs/*
 ./pipeline/cache/*
+modou_workspace
+logs
 *.swp
 ./backend
 .DS_Store

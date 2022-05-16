@@ -5,6 +5,8 @@ services:
       - 9009:9009
     networks:
       - pipeline-network
+    volumes:
+      - ./pipeline/modou_workspace:/tmp/modou
   db:
     image: postgres:9.6
     ports:
@@ -18,7 +20,7 @@ services:
     volumes:
       - ./pgdata:/var/lib/postgresql/data
       - ${PWD}/pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
-      - ./db:/db/
+      # - ./db:/db/
     networks:
       - pipeline-network
   rabbitmq:
@@ -46,6 +48,10 @@ services:
       - "rabbitmq"
     networks:
       - pipeline-network
+    mac_address: 8a:ca:58:b9:e9:51
+    volumes:
+      - ./backend/magicbean:/root/.magicbean
+      - ./backend/logs:/usr/opt/backend/logs
 volumes:
   db-data:
 networks:
