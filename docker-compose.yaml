@@ -50,3 +50,4 @@ volumes:
   db-data:
 networks:
   pipeline-network:
+    driver: bridge

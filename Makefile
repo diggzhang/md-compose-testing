@@ -6,3 +6,6 @@ build: ## Build the container
 
 run: ## run container
 	docker run -d -p 22 modou
+
+clean:
+	docker image prune

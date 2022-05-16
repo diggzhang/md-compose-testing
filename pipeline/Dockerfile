@@ -1,6 +1,6 @@
 FROM domblack/oracle-jdk8
 
-ENV MAGICBEAN_VERSION="2.5.76"
+ENV MAGICBEAN_VERSION="2.6.0"
 ENV MB_PIPELINE_PORT=9009
 ENV SPARK_OPTS="-Dspark.dynamicAllocation.enabled=false -Dspark.shuffle.service.enabled=false"
 ENV SPARK_HOME="/usr/opt/pipeline/spark"
@@ -13,7 +13,7 @@ RUN mkdir -p /usr/opt/pipeline/libs \
     && chmod 777 /tmp/
 
 WORKDIR /usr/opt/pipeline/
-COPY magicbean-2.5.76.tar.gz /usr/opt/pipeline/
+COPY magicbean-2.6.0.tar.gz /usr/opt/pipeline/
 COPY spark-2.4.8-bin-hadoop2.7.tgz /usr/opt/pipeline/ 
 RUN tar -zxvf magicbean-$MAGICBEAN_VERSION.tar.gz -C /usr/opt/pipeline/
 RUN tar -zxvf spark-2.4.8-bin-hadoop2.7.tgz -C /usr/opt/pipeline/
