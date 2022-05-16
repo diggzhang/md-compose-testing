@@ -20,7 +20,6 @@ services:
     volumes:
       - ./pgdata:/var/lib/postgresql/data
       - ${PWD}/pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
-      # - ./db:/db/
     networks:
       - pipeline-network
   rabbitmq:
@@ -51,6 +50,7 @@ services:
     mac_address: 8a:ca:58:b9:e9:51
     volumes:
       - ./backend/magicbean:/root/.magicbean
+      - ./backend/magicbean/templates:/root/.magicbean/templates
       - ./backend/logs:/usr/opt/backend/logs
 volumes:
   db-data:
